@@ -4,49 +4,49 @@ public class MyArrayList<K> implements MyList<K> {
     private static final int DEFAULT_CAPACITY = 10;
     private Object[] elements;
     private int size;
-    private K[] arr;
 
     public MyArrayList() {
         this.elements = new Object[DEFAULT_CAPACITY];
         this.size = 0;
     }
+
+    // Method to increase the buffer size
     private void increaseBuffer() {
-        K[] array = (K[]) new Object[elements.length*2];
-        for (int i = 0; i < elements.length; i++) {
-            array[i] = (K) elements[i];  // Copy each element from old to new
-        }
-        elements = array; // Change reference of arr from old memory location to new
+        Object[] newArray = new Object[elements.length * 2];
+        System.arraycopy(elements, 0, newArray, 0, size);
+        elements = newArray;
     }
 
     // Method to check if the index is within bounds
     private void checkIndex(int index) {
-        if(index < 0 || index >= size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index not correct");
         }
     }
 
     // Method to check index of array when adding an element at position
     private void addCheckIndex(int index) {
-        if(index < 0 || index > size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index not correct");
         }
     }
 
-
     @SuppressWarnings("unchecked")
     @Override
     public void add(K item) {
-        ensureCapacity();
+        if (size == elements.length) {
+            increaseBuffer();
+        }
         elements[size++] = item;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void add(int index, K item) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException();
+        addCheckIndex(index);
+        if (size == elements.length) {
+            increaseBuffer();
         }
-        ensureCapacity();
         System.arraycopy(elements, index, elements, index + 1, size - index);
         elements[index] = item;
         size++;
@@ -65,9 +65,7 @@ public class MyArrayList<K> implements MyList<K> {
     @SuppressWarnings("unchecked")
     @Override
     public K get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkIndex(index);
         return (K) elements[index];
     }
 
@@ -84,22 +82,15 @@ public class MyArrayList<K> implements MyList<K> {
     @SuppressWarnings("unchecked")
     @Override
     public void set(int index, K item) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkIndex(index);
         elements[index] = item;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
-        int numMoved = size - index - 1;
-        if (numMoved > 0) {
-            System.arraycopy(elements, index + 1, elements, index, numMoved);
-        }
+        checkIndex(index);
+        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
         elements[--size] = null;
     }
 
@@ -170,9 +161,7 @@ public class MyArrayList<K> implements MyList<K> {
     @Override
     public Object[] toArray() {
         Object[] array = new Object[size];
-        for (int i = 0; i < size; i++) {
-            array[i] = elements[i];
-        }
+        System.arraycopy(elements, 0, array, 0, size);
         return array;
     }
 
@@ -189,20 +178,12 @@ public class MyArrayList<K> implements MyList<K> {
         return size;
     }
 
+    // Method to print the elements of the array list
     public void printArr() {
         for (int i = 0; i < size; i++) {
             System.out.print(elements[i] + " ");
         }
         System.out.println("\n");
-    }
-
-    private void ensureCapacity() {
-        if (size == elements.length) {
-            int newCapacity = elements.length * 2;
-            Object[] newElements = new Object[newCapacity];
-            System.arraycopy(elements, 0, newElements, 0, size);
-            elements = newElements;
-        }
     }
 
     @Override
@@ -222,6 +203,4 @@ public class MyArrayList<K> implements MyList<K> {
             }
         };
     }
-
-
 }
