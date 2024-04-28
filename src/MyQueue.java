@@ -1,4 +1,4 @@
-public class MyQueue<T> extends MyLinkedList<T> {
+public class MyQueue<T>  {
     MyLinkedList<T> myLinkedList;
 
     public MyQueue(){
