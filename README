@@ -1,0 +1,94 @@
+# Data Structures Implementation in Java
+
+This project provides Java implementations of various data structures, including:
+
+- ArrayList
+- LinkedList
+- Stack
+- Queue
+- MinHeap
+
+## Data Structures Implemented
+
+### 1. ArrayList
+
+The `MyArrayList` class implements the `MyList` interface and provides functionalities similar to Java's `ArrayList`.
+
+#### Features:
+
+- Adding elements (`add`, `addFirst`, `addLast`)
+- Getting elements (`get`, `getFirst`, `getLast`)
+- Setting elements (`set`)
+- Removing elements (`remove`, `removeFirst`, `removeLast`)
+- Sorting elements (`sort`)
+- Finding the index of elements (`indexOf`, `lastIndexOf`)
+- Checking if an element exists (`exists`)
+- Converting the list to an array (`toArray`)
+- Clearing the list (`clear`)
+- Getting the size of the list (`size`)
+
+### 2. LinkedList
+
+The `MyLinkedList` class implements the `MyList` interface and provides functionalities similar to Java's `LinkedList`.
+
+#### Features:
+
+- Adding elements (`add`, `addFirst`, `addLast`)
+- Getting elements (`get`, `getFirst`, `getLast`)
+- Setting elements (`set`)
+- Removing elements (`remove`, `removeFirst`, `removeLast`)
+- Sorting elements (`sort`)
+- Finding the index of elements (`indexOf`, `lastIndexOf`)
+- Checking if an element exists (`exists`)
+- Converting the list to an array (`toArray`)
+- Clearing the list (`clear`)
+- Getting the size of the list (`size`)
+- Iterator for traversing the list
+
+### 3. Stack
+
+The `MyStack` class provides a simple implementation of a stack data structure.
+
+#### Features:
+
+- Pushing elements onto the stack (`push`)
+- Popping elements from the stack (`pop`)
+- Getting the top element of the stack (`peek`)
+- Getting the size of the stack (`size`)
+- Checking if the stack is empty (`isEmpty`)
+
+### 4. Queue
+
+The `MyQueue` class provides a simple implementation of a queue data structure.
+
+#### Features:
+
+- Enqueuing elements into the queue (`enqueue`)
+- Dequeuing elements from the queue (`dequeue`)
+- Getting the front element of the queue (`peek`)
+- Getting the size of the queue (`size`)
+- Checking if the queue is empty (`isEmpty`)
+
+### 5. MinHeap
+
+The `MyMinHeap` class provides a simple implementation of a min-heap data structure.
+
+#### Features:
+
+- Inserting elements into the heap (`insert`)
+- Extracting the minimum element from the heap (`extractMin`)
+- Getting the minimum element of the heap (`getMin`)
+- Getting the size of the heap (`size`)
+- Checking if the heap is empty (`isEmpty`)
+
+## Usage
+
+You can use these data structures by importing the respective classes into your Java project. For example:
+
+```java
+// Example usage of ArrayList
+MyArrayList<String> myList = new MyArrayList<>();
+myList.add("Apple");
+myList.add("Banana");
+myList.add("Orange");
+System.out.println("First fruit: " + myList.get(0)); // Output: First fruit: Apple
