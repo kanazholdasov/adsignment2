@@ -1,4 +1,4 @@
-public class MyStack<K> extends MyArrayList<K>{
+public class MyStack<K> {
     MyArrayList<K> arrayList;
 
     public MyStack(){
