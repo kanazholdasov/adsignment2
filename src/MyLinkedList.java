@@ -151,7 +151,16 @@ public class MyLinkedList<T> implements MyList<T> {
 
     @Override
     public void sort() {
-        // Sorting logic here
+        for (MyNode i = head; i != null; i = i.next) {
+            for (MyNode j = i.next; j != null; j = j.next) {
+                if (((Comparable<T>) i.element).compareTo((T) j.element) > 0) {
+                    T temp = (T) i.element;
+                    i.element = j.element;
+                    j.element = temp;
+                }
+            }
+        }
+
     }
 
     @Override
@@ -257,5 +266,14 @@ public class MyLinkedList<T> implements MyList<T> {
 
     private boolean isEmpty() {
         return size == 0;
+    }
+
+    public void printArr(){
+        MyNode currentNode = head;
+        while(currentNode != null){
+            System.out.print(currentNode.element + " ");
+            currentNode = currentNode.next;
+        }
+        System.out.println("\n");
     }
 }
