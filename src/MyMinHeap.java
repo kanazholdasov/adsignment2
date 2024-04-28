@@ -1,4 +1,4 @@
-public class MyMinHeap<K extends Comparable<K>> extends MyLinkedList {
+public class MyMinHeap<K extends Comparable<K>>{
     private MyArrayList<K> heap;
 
     public MyMinHeap() {
