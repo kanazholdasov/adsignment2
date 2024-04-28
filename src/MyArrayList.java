@@ -1,25 +1,48 @@
 import java.util.Iterator;
 
-public class MyArrayList<T> implements MyList<T> {
+public class MyArrayList<K> implements MyList<K> {
     private static final int DEFAULT_CAPACITY = 10;
     private Object[] elements;
     private int size;
+    private K[] arr;
 
     public MyArrayList() {
         this.elements = new Object[DEFAULT_CAPACITY];
         this.size = 0;
     }
+    private void increaseBuffer() {
+        K[] array = (K[]) new Object[elements.length*2];
+        for (int i = 0; i < elements.length; i++) {
+            array[i] = (K) elements[i];  // Copy each element from old to new
+        }
+        elements = array; // Change reference of arr from old memory location to new
+    }
+
+    // Method to check if the index is within bounds
+    private void checkIndex(int index) {
+        if(index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index not correct");
+        }
+    }
+
+    // Method to check index of array when adding an element at position
+    private void addCheckIndex(int index) {
+        if(index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index not correct");
+        }
+    }
+
 
     @SuppressWarnings("unchecked")
     @Override
-    public void add(T item) {
+    public void add(K item) {
         ensureCapacity();
         elements[size++] = item;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void add(int index, T item) {
+    public void add(int index, K item) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
@@ -30,37 +53,37 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     @Override
-    public void addFirst(T item) {
+    public void addFirst(K item) {
         add(0, item);
     }
 
     @Override
-    public void addLast(T item) {
+    public void addLast(K item) {
         add(size, item);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public T get(int index) {
+    public K get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        return (T) elements[index];
+        return (K) elements[index];
     }
 
     @Override
-    public T getFirst() {
+    public K getFirst() {
         return get(0);
     }
 
     @Override
-    public T getLast() {
+    public K getLast() {
         return get(size - 1);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void set(int index, T item) {
+    public void set(int index, K item) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
@@ -92,7 +115,15 @@ public class MyArrayList<T> implements MyList<T> {
 
     @Override
     public void sort() {
-        // Sorting logic here
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (((Comparable<K>) elements[j]).compareTo((K) elements[j + 1]) > 0) {
+                    K temp = (K) elements[j];
+                    elements[j] = elements[j + 1];
+                    elements[j + 1] = temp;
+                }
+            }
+        }
     }
 
     @Override
@@ -139,7 +170,9 @@ public class MyArrayList<T> implements MyList<T> {
     @Override
     public Object[] toArray() {
         Object[] array = new Object[size];
-        System.arraycopy(elements, 0, array, 0, size);
+        for (int i = 0; i < size; i++) {
+            array[i] = elements[i];
+        }
         return array;
     }
 
@@ -156,6 +189,13 @@ public class MyArrayList<T> implements MyList<T> {
         return size;
     }
 
+    public void printArr() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(elements[i] + " ");
+        }
+        System.out.println("\n");
+    }
+
     private void ensureCapacity() {
         if (size == elements.length) {
             int newCapacity = elements.length * 2;
@@ -166,8 +206,8 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
+    public Iterator<K> iterator() {
+        return new Iterator<K>() {
             private int currentIndex = 0;
 
             @Override
@@ -177,9 +217,11 @@ public class MyArrayList<T> implements MyList<T> {
 
             @SuppressWarnings("unchecked")
             @Override
-            public T next() {
-                return (T) elements[currentIndex++];
+            public K next() {
+                return (K) elements[currentIndex++];
             }
         };
     }
+
+
 }
